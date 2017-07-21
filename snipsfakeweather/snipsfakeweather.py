@@ -60,14 +60,14 @@ class SnipsFakeWeather:
         response = self.generate_forecast_sentence(locality, datetime)
         if self.tts_service:
             print("[fakeweather] " + response)
-            tts_service.speak(response)
+            self.tts_service.speak(response)
 
     def speak_condition(self, condition, locality, datetime, granularity=0):
         response = self.generate_condition_sentence(
             condition, locality, datetime)
         if self.tts_service:
             print("[fakeweather] " + response)
-            tts_service.speak(response)
+            self.tts_service.speak(response)
 
     def generate_forecast_sentence(self, locality, datetime, granularity=0):
         """ Generate a random weather forecast at a specified locality and
@@ -149,6 +149,7 @@ class SnipsFakeWeather:
             degrees = int(degrees * 9 / 5 + 32)
             degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
         return _("{}, {}").format(conditions, degrees_sentence)
+
 
 class DateUtils:
 
