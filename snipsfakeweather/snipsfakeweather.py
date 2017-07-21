@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+import datetime
+import random
+from gettext import gettext as _
+
+
 class SnipsFakeWeather:
 
+    class WeatherCondition:
+        rain, wind, sun = range(3)
+
     ANSWERS = {
-        "rain": {
+        WeatherCondition.rain: {
             True: [
                 _("Yes, it is going to be raining heavily"),
                 _("Yes, you can expect rain showers"),
@@ -18,7 +26,7 @@ class SnipsFakeWeather:
                 _("No, it is going to be sunny and dry")
             ]
         },
-        "wind": {
+        WeatherCondition.wind: {
             True: [
                 _("Yes, it is going to be windy"),
                 _("Yes, strong winds are expected"),
@@ -29,7 +37,7 @@ class SnipsFakeWeather:
                 _("No, it is not going to be windy")
             ]
         },
-        "sun": {
+        WeatherCondition.sun: {
             True: [
                 _("Yes, it is going to be sunny"),
                 _("Yes, clear sky is expected"),
@@ -45,78 +53,121 @@ class SnipsFakeWeather:
         }
     }
 
-    def __init__(self, tts_service):
+    def __init__(self, tts_service=None):
         self.tts_service = tts_service
 
-    def speak_forecast(self, locality):
-        response = self.generate_search_weather_forecast_response(
-            locality, intent.weatherForecastStartDatetime)
-        if response and self.tts_service:
+    def speak_forecast(self, locality, datetime, granularity=0):
+        response = self.generate_forecast_sentence(locality, datetime)
+        if self.tts_service:
+            print("[fakeweather] " + response)
             tts_service.speak(response)
 
-    def __handle_search_weather_forecast_condition(self, intent):
-        condition = intent.weatherForecastConditionName
-        datetime = intent.weatherForecastStartDatetime
-        locality = intent.weatherForecastLocality or intent.weatherForecastCountry or intent.weatherForecastRegion or intent.weatherForecastGeographicalPOI
-        response = self.__generate_search_weather_forecast_condition_response(
-            condition, locality, intent.weatherForecastStartDatetime)
-        if response:
-            print("[WEATHER] TTS: " + response)
-            TTS.speak(response, self.locale_id, self.threading)
+    def speak_condition(self, condition, locality, datetime, granularity=0):
+        response = self.generate_condition_sentence(
+            condition, locality, datetime)
+        if self.tts_service:
+            print("[fakeweather] " + response)
+            tts_service.speak(response)
 
-    ###########################################################################
-    # Sentence generation
-    ###########################################################################
+    def generate_forecast_sentence(self, locality, datetime, granularity=0):
+        """ Generate a random weather forecast at a specified locality and
+            datetime.
 
-    def __generate_search_weather_forecast_response(self, locality, datetime):
-        datetime_s = DateUtils.to_string(datetime) if isinstance(
-            datetime, DateTimeRepr) else None
-        if locality and datetime_s:
-            description = _("Weather conditions for {locality} for {datetime}").format(
-                locality=locality, datetime=datetime_s)
+        :param locality: The locality of the forecast, e.g. 'Paris,fr' or
+                         'Eiffel Tower'
+        :param datetime: Time of the forecast, in ISO 8601 format, e.g.
+                         "2017-07-21T10:35:29+00:00"
+        :return: A random response for a given weather condition
+                 at a specified locality and datetime.
+        """
+        if locality and datetime:
+            description = _("Weather conditions for {} for {}").format(locality,
+                                                                       DateUtils.to_string(datetime, granularity))
         elif locality:
-            description = _("Current weather conditions for {locality}").format(
-                locality=locality)
-        elif datetime and isinstance(datetime, DateTimeRepr):
-            description = _("Weather conditions for {datetime}").format(
-                datetime=datetime_s)
+            description = _(
+                "Current weather conditions for {}").format(locality)
+        elif datetime:
+            description = _("Weather conditions for {}").format(
+                DateUtils.to_string(datetime, granularity))
         else:
             description = _("Current weather conditions")
-        return "{0}: {1}".format(description, self.__generate_random_forecast())
+        return "{0}: {1}".format(description, self.generate_random_forecast())
 
-    def __generate_search_weather_forecast_condition_response(self, condition, locality, datetime):
+    def generate_condition_sentence(self, condition, locality, datetime, granularity=0):
+        """ Generate a random response for a given weather condition
+            at a specified locality and datetime.
+
+        :param condition: A SnipsFakeWeather.WeatherCondition enum
+                          corresponding to a weather condition, e.g.
+                          SnipsFakeWeather.WeatherCondition.sun.
+        :param locality: The locality of the forecast, e.g. 'Paris,fr' or
+                         'Eiffel Tower'
+        :param datetime: Time of the forecast, in ISO 8601 format, e.g.
+                         "2017-07-21T10:35:29+00:00"
+        :return: A random response for a given weather condition
+                 at a specified locality and datetime.
+        """
         if not condition:
-            return self.__generate_search_weather_forecast_response(locality, datetime)
+            return self.generate_forecast_sentence(locality, datetime)
 
-        answer = self.__generate_response_for_condition(condition)
+        yesNo = random.choice([True, False])
+        if condition in self.phrases:
+            answer = random.choice(self.phrases[condition][yesNo])
+        else:
+            answer = _("Sorry, we couldn't find the weather conditions")
+
         datetime_s = DateUtils.to_string(datetime) if isinstance(
             datetime, DateTimeRepr) else None
 
-        if locality and datetime_s:
-            sentence = _("{answer} {datetime} in {locality}").format(
-                answer=answer, datetime=datetime_s, locality=locality)
+        if locality and datetime:
+            sentence = _("{} {} in {}").format(answer,
+                                               DateUtils.to_string(
+                                                   datetime, granularity),
+                                               locality)
         elif locality:
-            sentence = _("{answer} in {locality}").format(
-                answer=answer, locality=locality)
-        elif datetime_s:
-            sentence = _("{answer} {datetime}").format(
-                answer=answer, datetime=datetime_s, locality=locality)
+            sentence = _("{} in {}").format(answer, locality)
+        elif datetime:
+            sentence = _("{} {}").format(
+                answer, DateUtils.to_string(datetime, granularity))
         else:
             sentence = answer
         return sentence
 
-    def __generate_random_forecast(self):
+    def generate_random_forecast(self, use_celcius=True):
+        """ Generate a random weather forecast.
+
+        :param use_celcius: If true, phrase should use degrees celcius,
+                            otherwise use Fahrenheit.
+        :return: A phrase describing a random weather forecast.
+        """
         degrees = random.choice([12, 15, 18, 21, 23])
         conditions = random.choice([_("cloudy"), _("rainy"), _(
             "thunder storms"), _("windy"), _("clear sky"), _("light wind")])
-        return _("{conditions}, {degrees} degrees celcius").format(conditions=conditions, degrees=degrees)
+        if use_celcius:
+            degrees_sentence = _("{} degrees celcius").format(degrees)
+        else:
+            degrees = int(degrees * 9 / 5 + 32)
+            degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
+        return _("{}, {}").format(conditions, degrees_sentence)
 
-    def __generate_response_for_condition(self, condition):
-        yesNo = random.choice([True, False])
-        if "rain" in condition:
-            return random.choice(self.phrases["rain"][yesNo])
-        elif "sun" in condition:
-            return random.choice(self.phrases["sun"][yesNo])
-        elif "wind" in condition:
-            return random.choice(self.phrases["wind"][yesNo])
-        return _("Sorry, we couldn't find the weather conditions")
+class DateUtils:
+
+    @staticmethod
+    def to_string(datetime, granularity=0):
+        """ Convert a datetime to a string, with an appropriate level of
+            granularity.
+
+        :param datetime: A datetime object.
+        :param granularity: Granularity for the desired textual representation.
+                            0: precise (date and time are returned)
+                            1: day (only date is returned)
+                            2: month (only year and month are returned)
+                            4: year (only year is returned)
+        :return: A textual representation of the datetime.
+        """
+        if not datetime:
+            return None
+        if granularity == 0:
+            return datetime.strftime("%A, %d %b, %H:%M%p")
+        else:
+            return datetime.strftime("%A, %d %b")
