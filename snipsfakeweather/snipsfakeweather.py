@@ -54,23 +54,14 @@ class SnipsFakeWeather:
     }
 
     def __init__(self, tts_service=None):
+        """
+        :param tts_service: A TTS service, i.e. an object which has a
+                            `speak(text)` method for speaking the result.
+        """
         self.tts_service = tts_service
 
     def speak_forecast(self, locality, datetime, granularity=0):
-        response = self.generate_forecast_sentence(locality, datetime)
-        if self.tts_service:
-            print("[fakeweather] " + response)
-            self.tts_service.speak(response)
-
-    def speak_condition(self, condition, locality, datetime, granularity=0):
-        response = self.generate_condition_sentence(
-            condition, locality, datetime)
-        if self.tts_service:
-            print("[fakeweather] " + response)
-            self.tts_service.speak(response)
-
-    def generate_forecast_sentence(self, locality, datetime, granularity=0):
-        """ Generate a random weather forecast at a specified locality and
+        """ Speak a random weather forecast at a specified locality and
             datetime.
 
         :param locality: The locality of the forecast, e.g. 'Paris,fr' or
@@ -80,6 +71,32 @@ class SnipsFakeWeather:
         :return: A random response for a given weather condition
                  at a specified locality and datetime.
         """
+        response = self.generate_forecast_sentence(locality, datetime)
+        if self.tts_service:
+            print("[fakeweather] " + response)
+            self.tts_service.speak(response)
+
+    def speak_condition(self, condition, locality, datetime, granularity=0):
+        """ Speak a random response for a given weather condition
+            at a specified locality and datetime.
+
+        :param condition: A SnipsFakeWeather.WeatherCondition enum
+                          corresponding to a weather condition, e.g.
+                          SnipsFakeWeather.WeatherCondition.sun.
+        :param locality: The locality of the forecast, e.g. 'Paris,fr' or
+                         'Eiffel Tower'
+        :param datetime: Time of the forecast, in ISO 8601 format, e.g.
+                         "2017-07-21T10:35:29+00:00"
+        :return: A random response for a given weather condition
+                 at a specified locality and datetime.
+        """
+        response = self.generate_condition_sentence(
+            condition, locality, datetime)
+        if self.tts_service:
+            print("[fakeweather] " + response)
+            self.tts_service.speak(response)
+
+    def generate_forecast_sentence(self, locality, datetime, granularity=0):
         if locality and datetime:
             description = _("Weather conditions for {} for {}").format(locality,
                                                                        DateUtils.to_string(datetime, granularity))
@@ -94,19 +111,6 @@ class SnipsFakeWeather:
         return "{0}: {1}".format(description, self.generate_random_forecast())
 
     def generate_condition_sentence(self, condition, locality, datetime, granularity=0):
-        """ Generate a random response for a given weather condition
-            at a specified locality and datetime.
-
-        :param condition: A SnipsFakeWeather.WeatherCondition enum
-                          corresponding to a weather condition, e.g.
-                          SnipsFakeWeather.WeatherCondition.sun.
-        :param locality: The locality of the forecast, e.g. 'Paris,fr' or
-                         'Eiffel Tower'
-        :param datetime: Time of the forecast, in ISO 8601 format, e.g.
-                         "2017-07-21T10:35:29+00:00"
-        :return: A random response for a given weather condition
-                 at a specified locality and datetime.
-        """
         if not condition:
             return self.generate_forecast_sentence(locality, datetime)
 
