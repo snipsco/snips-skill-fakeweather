@@ -1,6 +1,9 @@
 # -*-: coding utf-8 -*-
 """ Fake weather forecast skill for Snips. """
 
+import random
+from gettext import gettext as _
+from enum import Enum
 
 class SnipsFakeWeather:
     """ Skill for presenting fake weather forecasts. """
@@ -8,9 +11,6 @@ class SnipsFakeWeather:
     def __init__(self, tts_service=None):
         print("Hello")
 
-# import random
-# from gettext import gettext as _
-# from enum import Enum
 
 
 # class WeatherCondition(Enum):
