@@ -1,7 +1,7 @@
 from unittest import TestCase
 from datetime import datetime
 
-#from snipsfakeweather.snipsfakeweather import SnipsFakeWeather
+from snipsfakeweather.snipsfakeweather import SnipsFakeWeather
 
 
 class TestSkill(TestCase):
