@@ -63,7 +63,6 @@ class SnipsFakeWeather:
         :param tts_service: A TTS service, i.e. an object which has a
                             `speak(text)` method for speaking the result.
         """
-        print("INIT")
         self.tts_service = tts_service
 
     def speak_forecast(self, locality, date, granularity=0):
@@ -79,10 +78,8 @@ class SnipsFakeWeather:
         :return: A random response for a given weather condition
                  at a specified locality and datetime.
         """
-        print("fakeweather")
         response = SnipsFakeWeather.generate_forecast_sentence(
             locality, date, granularity)
-        print("[fakeweather] Forcast: " + response)
         if self.tts_service:
             self.tts_service.speak(response)
 
@@ -102,7 +99,6 @@ class SnipsFakeWeather:
         """
         response = self.generate_condition_sentence(
             condition, locality, date, granularity)
-        print("[fakeweather] Conditions: " + response)
         if self.tts_service:
             self.tts_service.speak(response)
 
