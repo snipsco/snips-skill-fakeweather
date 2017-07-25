@@ -17,14 +17,14 @@ The skill is on `PyPI`_, so you can just install it with `pip`_:
 Usage
 -----
 
-The skill allows you to control `Philips Hue`_ lights. In order to use it, you need the IP address of your Hue Bridge, as well as the username:
+The skill presents fake weather forecasts for demo purposes.
 
 .. code-block:: python
 
-    from snipshue.snipshue import SnipsHue
+    from snipsfakeweather.snipsfakeweather import SnipsFakeWeather
 
-    hue = SnipsHue(hostname, username, light_ids) 
-    hue.turn_on()
+    weather = SnipsFakeWeather() 
+    weather.speak_forecast("Paris,fr")
 
 Copyright
 ---------
@@ -32,19 +32,18 @@ Copyright
 This skill is provided by `Snips`_ as Open Source software. See `LICENSE.txt`_ for more
 information.
 
-.. |Build Status| image:: https://travis-ci.org/snipsco/snips-skill-hue.svg
-   :target: https://travis-ci.org/snipsco/snips-skill-hue
+.. |Build Status| image:: https://travis-ci.org/snipsco/snips-skill-fakeweather.svg
+   :target: https://travis-ci.org/snipsco/snips-skill-fakeweather
    :alt: Build Status
-.. |PyPI| image:: https://img.shields.io/pypi/v/snipsowm.svg
-   :target: https://pypi.python.org/pypi/snipsowm
+.. |PyPI| image:: https://img.shields.io/pypi/v/snipsfakeweather.svg
+   :target: https://pypi.python.org/pypi/snipsfakeweather
    :alt: PyPI
 .. |MIT License| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: https://raw.githubusercontent.com/snipsco/snips-skill-hue/master/LICENSE.txt
    :alt: MIT License
 
-.. _`PyPI`: https://pypi.python.org/pypi/snipshue
+.. _`PyPI`: https://pypi.python.org/pypi/snipsfakeweather
 .. _`pip`: http://www.pip-installer.org
-.. _`Philips Hue`: http://www2.meethue.com/
 .. _`Snips`: https://www.snips.ai
 .. _`OpenWeatherMap website`: https://openweathermap.org/api
 .. _`LICENSE.txt`: https://github.com/snipsco/snips-skill-hue/blob/master/LICENSE.txt

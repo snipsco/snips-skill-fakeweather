@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='snipsfakeweather',
-    version='0.1.0',
+    version='0.1.1',
     description='Fake weather forescasts skill for Snips',
     author='Michael Fester',
     author_email='michael.fester@gmail.com',
