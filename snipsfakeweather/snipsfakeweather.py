@@ -3,7 +3,7 @@
 
 import random
 from gettext import gettext as _
-# from enum import Enum
+from enum import Enum
 
 class SnipsFakeWeather:
     """ Skill for presenting fake weather forecasts. """
