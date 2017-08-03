@@ -106,13 +106,20 @@ class SnipsFakeWeather:
         :param condition: A WeatherCondition value
                           corresponding to a weather condition, e.g.
                           WeatherCondition.sun.
+        :type condition: SnipsFakeWeather.WeatherCondition
+
         :param locality: The locality of the forecast, e.g. 'Paris,fr' or
                          'Eiffel Tower'.
+        :type locality: string
+
         :param date: Time of the forecast, in ISO 8601 format, e.g.
                      "2017-07-21T10:35:29+00:00".
+        :type date: datetime
 
         :param granularity: The granularity of the weather forecast,
                             e.g. "tomorrow at 12.00" or "Friday".
+        :type granularity: int
+
         :return: A random response for a given weather condition
                  at a specified locality and datetime.
         """
@@ -202,6 +209,6 @@ class SnipsFakeWeather:
         if not date:
             return None
         if granularity == 0:
-            return date.strftime("%A, %d %b, %H:%M%p")
+            return date.strftime("%A, %d %B, %H:%M%p")
         else:
-            return date.strftime("%A, %d %b")
+            return date.strftime("%A, %d %B")
