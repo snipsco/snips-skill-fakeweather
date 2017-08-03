@@ -54,7 +54,7 @@ ANSWERS = {
 class SnipsFakeWeather:
     """ Skill for presenting fake weather forecasts. """
 
-    def __init__(self, tts_service):
+    def __init__(self, tts_service=None):
         """
         :param tts_service: A TTS service, i.e. an object which has a
                             `speak(text)` method for speaking the result.
