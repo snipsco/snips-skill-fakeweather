@@ -7,7 +7,7 @@ from snipsfakeweather.snipsfakeweather import SnipsFakeWeather
 class TestSkill(TestCase):
 
     def setUp(self):
-        self.skill = SnipsFakeWeather()
+        self.skill = SnipsFakeWeather(None)
 
     def test_skill(self):
         self.skill.speak_forecast("Paris,fr", datetime.now(), 0)
