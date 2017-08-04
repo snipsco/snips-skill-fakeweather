@@ -9,7 +9,7 @@ setup(
     url='https://github.com/snipsco/snips-skill-fakeweather',
     download_url='',
     license='MIT',
-    install_requires=['snipsskillscore'],
+    install_requires=[],
     test_suite="tests",
     keywords=['snips'],
     include_package_data=True,
