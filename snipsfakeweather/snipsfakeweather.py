@@ -116,7 +116,7 @@ class SnipsFakeWeather:
         :return: A random response for a given weather condition
                  at a specified locality and datetime.
         """
-        if not condition:
+        if condition is None:
             return SnipsFakeWeather.generate_forecast_sentence(locality, date)
 
         if condition in ANSWERS:

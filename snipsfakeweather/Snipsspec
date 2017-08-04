@@ -26,6 +26,8 @@ intents:
   - intent: SearchWeatherForecastCondition
     action: |
       {%
+      from snipsfakeweather.snipsfakeweather import WeatherCondition
+
       locality = None
       try:
         locality = intent.weatherForecastLocality \
@@ -49,6 +51,7 @@ intents:
         name = intent.weatherForecastConditionName
       except Exception:
         pass
+
       if "rain" in name:
         condition = WeatherCondition.rain
       elif "wind" in name:
