@@ -12,7 +12,7 @@ class BaseTest(TestCase):
 class ConditionTest(BaseTest):
 
     def test_generate_condition_with_correct_params(self):
-        condition = WeatherCondition.RAIN
+        condition = WeatherCondition.rain
         locality = "Tokyo"
         date = datetime.now()
         granularity = 1
@@ -30,7 +30,7 @@ class ConditionTest(BaseTest):
         self.assertEqual(result, "Sorry, we couldn't find the weather conditions")
 
     def test_generate_condition_without_locality_nor_date(self):
-        condition = WeatherCondition.SUN
+        condition = WeatherCondition.sun
 
         result = self.skill.generate_condition_sentence(condition,
                                                         locality=None,
