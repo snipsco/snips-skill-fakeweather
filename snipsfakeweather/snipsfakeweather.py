@@ -88,8 +88,12 @@ class SnipsFakeWeather:
                           WeatherCondition.sun.
         :param locality: The locality of the forecast, e.g. 'Paris,fr' or
                          'Eiffel Tower'
+        :type locality: string
+
         :param date: Time of the forecast, in ISO 8601 format, e.g.
                      "2017-07-21T10:35:29+00:00"
+        :type date: datetime
+
         :return: A random response for a given weather condition
                  at a specified locality and datetime.
         """
@@ -130,7 +134,7 @@ class SnipsFakeWeather:
             choice = random.choice([True, False])
             answer = random.choice(ANSWERS[condition][choice])
         else:
-            answer = _("Sorry, we couldn't find the weather conditions")
+            return _("Sorry, we couldn't find the weather conditions")
 
         if locality and date:
             sentence = _("{} {} in {}").format(answer,
@@ -201,14 +205,19 @@ class SnipsFakeWeather:
         :param date: A datetime object.
         :param granularity: Granularity for the desired textual representation.
                             0: precise (date and time are returned)
-                            1: day (only date is returned)
+                            1: day (only the week day is returned)
                             2: month (only year and month are returned)
-                            4: year (only year is returned)
+                            3: year (only year is returned)
         :return: A textual representation of the date.
         """
         if not date:
             return None
+
         if granularity == 0:
-            return date.strftime("%A, %d %B, %H:%M%p")
-        else:
+            return date.strftime("%A")
+        elif granularity == 1:
+            return date.strftime("%A, %d")
+        elif granularity == 2:
             return date.strftime("%A, %d %B")
+        else:
+            return date.strftime("%A, %d %B, %H:%M%p")
