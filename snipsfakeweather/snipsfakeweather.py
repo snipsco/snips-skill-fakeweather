@@ -198,7 +198,7 @@ class SnipsFakeWeather:
         return _("{}, {}").format(conditions, degrees_sentence)
 
     @staticmethod
-    def generate_temperature(use_celcius=True, locality, date, granularity=0):
+    def generate_temperature(locality, date, granularity=0, use_celcius=True):
         """ Generates a temperature sentence, for an optional locality and an optional date with an associated optional
         granularity.
         :param use_celcius:

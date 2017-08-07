@@ -63,6 +63,14 @@ class ForecastTest(BaseTest):
         self.assertGreater(len(result), 0)
 
 
+class TemperatureTest(BaseTest):
 
+    def test_generate_forecast_with_correct_params(self):
+        locality = "Bishkek"
+        date = datetime.now()
+        result = self.skill.generate_temperature(locality=locality, date=date, granularity=0)
+        self.assertGreater(len(result), 0)
 
-
+    def test_generate_forecast_without_parameters(self):
+        result = self.skill.generate_temperature(None, None, granularity=0)
+        self.assertGreater(len(result), 0)
