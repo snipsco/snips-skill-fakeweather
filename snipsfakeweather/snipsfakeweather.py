@@ -198,6 +198,55 @@ class SnipsFakeWeather:
         return _("{}, {}").format(conditions, degrees_sentence)
 
     @staticmethod
+    def generate_temperature(use_celcius=True, locality, date, granularity=0):
+        """ Generates a temperature sentence, for an optional locality and an optional date with an associated optional
+        granularity.
+        :param use_celcius:
+        :type use_celcius: Boolean
+
+        :param locality:
+        :type locality: String
+
+        :param date: Time of the forecast, in ISO 8601 format, e.g. "2017-07-21T10:35:29+00:00".
+        :type date: datetime
+
+        :param granularity: The granularity of the weather forecast.
+        :type granularity: int
+
+        :rtype: string
+        """
+        degrees = random.choice([12, 15, 18, 21, 23])
+
+        if (use_celcius):
+            degrees_sentence = "{} degrees Celcius".format(degrees)
+        else:
+            degrees_sentence = "{} degrees Fahrenheit".format(degrees)
+
+        if locality and date:
+            sentence = "On {} in {}, it's going to be {}".format(
+                SnipsFakeWeather.date_to_string(date, granularity),
+                locality,
+                degrees_sentence
+            )
+
+        elif locality:
+            sentence = "In {}, it's going to be {}".format(
+                locality,
+                degrees_sentence
+            )
+        elif date:
+            sentence = "On {}, it's going to be {}".format(
+                SnipsFakeWeather.date_to_string(date, granularity),
+                degrees_sentence
+            )
+        else:
+            sentence = "It's going to be {}".format(degrees_sentence)
+
+        return sentence
+
+
+
+    @staticmethod
     def date_to_string(date, granularity=0):
         """ Convert a date to a string, with an appropriate level of
             granularity.
