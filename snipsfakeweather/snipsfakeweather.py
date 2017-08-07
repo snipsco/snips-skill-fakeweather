@@ -102,6 +102,25 @@ class SnipsFakeWeather:
         if self.tts_service is not None:
             self.tts_service.speak(response)
 
+    def speak_temperature(self, locality, datetime, granularity=0):
+        """ Speak a temperature response for a given weather condition
+                    at a specified locality and datetime.
+
+                :param locality: The locality of the forecast, e.g. 'Paris,fr' or
+                                 'Eiffel Tower'
+                :type locality: string
+
+                :param date: Time of the forecast, in ISO 8601 format, e.g.
+                             "2017-07-21T10:35:29+00:00"
+                :type date: datetime
+
+                :return: A random response for a given weather condition
+                         at a specified locality and datetime.
+                """
+        response = SnipsFakeWeather.generate_temperature(locality, datetime, granularity)
+        if self.tts_service is not None:
+            self.tts_service.speak(response)
+
     @staticmethod
     def generate_condition_sentence(condition, locality, date, granularity=0):
         """ Generate a random response for a given weather condition
@@ -196,6 +215,55 @@ class SnipsFakeWeather:
             degrees = int(degrees * 9 / 5 + 32)
             degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
         return _("{}, {}").format(conditions, degrees_sentence)
+
+    @staticmethod
+    def generate_temperature(locality, date, granularity=0, use_celcius=True):
+        """ Generates a temperature sentence, for an optional locality and an optional date with an associated optional
+        granularity.
+        :param use_celcius:
+        :type use_celcius: Boolean
+
+        :param locality:
+        :type locality: String
+
+        :param date: Time of the forecast, in ISO 8601 format, e.g. "2017-07-21T10:35:29+00:00".
+        :type date: datetime
+
+        :param granularity: The granularity of the weather forecast.
+        :type granularity: int
+
+        :rtype: string
+        """
+        degrees = random.choice([12, 15, 18, 21, 23])
+
+        if (use_celcius):
+            degrees_sentence = _("{} degrees Celcius").format(degrees)
+        else:
+            degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
+
+        if locality and date:
+            sentence = _("On {} in {}, it's going to be {}").format(
+                SnipsFakeWeather.date_to_string(date, granularity),
+                locality,
+                degrees_sentence
+            )
+
+        elif locality:
+            sentence = _("In {}, it's going to be {}").format(
+                locality,
+                degrees_sentence
+            )
+        elif date:
+            sentence = _("On {}, it's going to be {}").format(
+                SnipsFakeWeather.date_to_string(date, granularity),
+                degrees_sentence
+            )
+        else:
+            sentence = _("It's going to be {}").format(degrees_sentence)
+
+        return sentence
+
+
 
     @staticmethod
     def date_to_string(date, granularity=0):
