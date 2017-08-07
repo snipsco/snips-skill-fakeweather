@@ -237,29 +237,29 @@ class SnipsFakeWeather:
         degrees = random.choice([12, 15, 18, 21, 23])
 
         if (use_celcius):
-            degrees_sentence = "{} degrees Celcius".format(degrees)
+            degrees_sentence = _("{} degrees Celcius").format(degrees)
         else:
-            degrees_sentence = "{} degrees Fahrenheit".format(degrees)
+            degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
 
         if locality and date:
-            sentence = "On {} in {}, it's going to be {}".format(
+            sentence = _("On {} in {}, it's going to be {}").format(
                 SnipsFakeWeather.date_to_string(date, granularity),
                 locality,
                 degrees_sentence
             )
 
         elif locality:
-            sentence = "In {}, it's going to be {}".format(
+            sentence = _("In {}, it's going to be {}").format(
                 locality,
                 degrees_sentence
             )
         elif date:
-            sentence = "On {}, it's going to be {}".format(
+            sentence = _("On {}, it's going to be {}").format(
                 SnipsFakeWeather.date_to_string(date, granularity),
                 degrees_sentence
             )
         else:
-            sentence = "It's going to be {}".format(degrees_sentence)
+            sentence = _("It's going to be {}").format(degrees_sentence)
 
         return sentence
 
