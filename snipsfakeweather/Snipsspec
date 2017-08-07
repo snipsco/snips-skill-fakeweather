@@ -2,7 +2,27 @@ package_name: snipsfakeweather
 class_name: SnipsFakeWeather
 intents:
   - intent: SearchWeatherForecastTemperature
-    action: 
+    action: |
+      {%
+      locality = None
+      try:
+        locality = intent.weatherForecastLocality \
+          or intent.weatherForecastCountry \
+          or intent.weatherForecastRegion \
+          or intent.weatherForecastGeographicalPOI
+      except Exception:
+        pass
+
+      datetime = None
+      granularity = None
+      if isinstance(intent.weatherForecastStartDatetime, InstantTime):
+        datetime = intent.weatherForecastStartDatetime.datetime
+        granularity = intent.weatherForecastStartDatetime.granularity
+      elif isinstance(intent.weatherForecastStartDatetime, TimeInterval):
+        datetime = intent.weatherForecastStartDatetime.start
+
+      skill.speak_temperature(locality, datetime, granularity)
+      %}
   - intent: SearchWeatherForecast
     action: |
       {%
