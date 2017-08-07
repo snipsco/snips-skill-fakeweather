@@ -1,6 +1,8 @@
 package_name: snipsfakeweather
 class_name: SnipsFakeWeather
 intents:
+  - intent: SearchWeatherForecastTemperature
+    action: 
   - intent: SearchWeatherForecast
     action: |
       {%
