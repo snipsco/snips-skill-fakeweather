@@ -102,6 +102,25 @@ class SnipsFakeWeather:
         if self.tts_service is not None:
             self.tts_service.speak(response)
 
+    def speak_temperature(self, locality, datetime, granularity=0):
+        """ Speak a temperature response for a given weather condition
+                    at a specified locality and datetime.
+
+                :param locality: The locality of the forecast, e.g. 'Paris,fr' or
+                                 'Eiffel Tower'
+                :type locality: string
+
+                :param date: Time of the forecast, in ISO 8601 format, e.g.
+                             "2017-07-21T10:35:29+00:00"
+                :type date: datetime
+
+                :return: A random response for a given weather condition
+                         at a specified locality and datetime.
+                """
+        response = SnipsFakeWeather.generate_temperature(locality, datetime, granularity)
+        if self.tts_service is not None:
+            self.tts_service.speak(response)
+
     @staticmethod
     def generate_condition_sentence(condition, locality, date, granularity=0):
         """ Generate a random response for a given weather condition
