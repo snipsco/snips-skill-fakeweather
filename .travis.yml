@@ -3,6 +3,8 @@ python:
   - "2.7"
 cache: pip
 install:
+  - pip install setuptools-lint
   - python setup.py install
 script:
+  - python setup.py lint
   - python setup.py green
