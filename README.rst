@@ -26,6 +26,15 @@ The skill presents fake weather forecasts for demo purposes.
     weather = SnipsFakeWeather() 
     weather.speak_forecast("Paris,fr")
 
+
+Pull Request checklist
+----------------------
+
+To ensure high quality code, before opening a pull request : make sure that you wrote tests for your code, and that you linted your code.
+Before opening the pull request, run your unit tests with `python setup.py test` and lint your code with `python setup.py lint --lint-rcfile lint.cfg`
+
+
+
 Copyright
 ---------
 
