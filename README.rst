@@ -5,6 +5,10 @@ Fake weather forecasts skill for Snips
 
 We got fake news. Now let's get fake weather forecasts.
 
+`snipsfakeweather` is a skill for the `snipsskills <https://github.com/snipsco/snipsskills>` program.
+It generates fake weather predictions for given location and/or time. 
+
+
 Installation
 ------------
 
