@@ -4,7 +4,7 @@
 import random
 from gettext import gettext as _
 
-class WeatherCondition:
+class WeatherCondition(object):
     """ Wrapper for weather conditions. """
     rain, wind, sun = range(3)
 
@@ -51,7 +51,7 @@ ANSWERS = {
 }
 
 
-class SnipsFakeWeather:
+class SnipsFakeWeather(object):
     """ Skill for presenting fake weather forecasts. """
 
     def __init__(self, tts_service=None):
@@ -218,8 +218,8 @@ class SnipsFakeWeather:
 
     @staticmethod
     def generate_temperature(locality, date, granularity=0, use_celcius=True):
-        """ Generates a temperature sentence, for an optional locality and an optional date with an associated optional
-        granularity.
+        """ Generates a temperature sentence, for an optional locality and an optional date
+        with an associated optional granularity.
         :param use_celcius:
         :type use_celcius: Boolean
 
@@ -236,7 +236,7 @@ class SnipsFakeWeather:
         """
         degrees = random.choice([12, 15, 18, 21, 23])
 
-        if (use_celcius):
+        if use_celcius:
             degrees_sentence = _("{} degrees Celcius").format(degrees)
         else:
             degrees_sentence = _("{} degrees Fahrenheit").format(degrees)
@@ -287,5 +287,5 @@ class SnipsFakeWeather:
             return date.strftime("%A, %d")
         elif granularity == 2:
             return date.strftime("%A, %d %B")
-        else:
-            return date.strftime("%A, %d %B, %H:%M%p")
+
+        return date.strftime("%A, %d %B, %H:%M%p")
