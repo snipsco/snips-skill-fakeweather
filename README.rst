@@ -5,6 +5,10 @@ Fake weather forecasts skill for Snips
 
 We got fake news. Now let's get fake weather forecasts.
 
+``snips-skill-fakeweather`` is a skill for the ``snipsskills`` program.
+It generates fake weather predictions for given location and/or time. 
+
+
 Installation
 ------------
 
@@ -25,6 +29,15 @@ The skill presents fake weather forecasts for demo purposes.
 
     weather = SnipsFakeWeather() 
     weather.speak_forecast("Paris,fr")
+
+
+Pull Request checklist
+----------------------
+
+To ensure high quality code, before opening a pull request : make sure that you wrote tests for your code, and that you linted your code.
+Before opening the pull request, run your unit tests with ``python setup.py test`` and lint your code with ``python setup.py lint --lint-rcfile lint.cfg``
+
+
 
 Copyright
 ---------
@@ -47,3 +60,4 @@ information.
 .. _`Snips`: https://www.snips.ai
 .. _`OpenWeatherMap website`: https://openweathermap.org/api
 .. _`LICENSE.txt`: https://github.com/snipsco/snips-skill-hue/blob/master/LICENSE.txt
+.. _snipsskills: https://github.com/snipsco/snipsskills
