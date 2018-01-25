@@ -7,10 +7,10 @@ intents:
       {%
       locality = None
       try:
-        locality = snips.intent.forecast_locality \
-          or snips.intent.forecast_country \
-          or snips.intent.forecast_region \
-          or snips.intent.forecast_geographical_poi
+        locality = (snips.intent.forecast_locality[0] if snips.intent.forecast_locality else None) \
+          or (snips.intent.forecast_country[0] if snips.intent.forecast_country else None) \
+          or (snips.intent.forecast_region[0] if snips.intent.forecast_region else None) \
+          or (snips.intent.forecast_geographical_poi[0] if snips.intent.forecast_geographical_poi else None)
       except Exception:
         pass
 
@@ -29,10 +29,10 @@ intents:
       {%
       locality = None
       try:
-        locality = snips.intent.forecast_locality \
-          or snips.intent.forecast_country \
-          or snips.intent.forecast_region \
-          or snips.intent.forecast_geographical_poi
+        locality = (snips.intent.forecast_locality[0] if snips.intent.forecast_locality else None) \
+          or (snips.intent.forecast_country[0] if snips.intent.forecast_country else None) \
+          or (snips.intent.forecast_region[0] if snips.intent.forecast_region else None) \
+          or (snips.intent.forecast_geographical_poi[0] if snips.intent.forecast_geographical_poi else None)
       except Exception:
         pass
 
@@ -53,10 +53,10 @@ intents:
 
       locality = None
       try:
-        locality = snips.intent.forecast_locality \
-          or snips.intent.forecast_country \
-          or snips.intent.forecast_region \
-          or snips.intent.forecast_geographical_poi
+        locality = (snips.intent.forecast_locality[0] if snips.intent.forecast_locality else None) \
+          or (snips.intent.forecast_country[0] if snips.intent.forecast_country else None) \
+          or (snips.intent.forecast_region[0] if snips.intent.forecast_region else None) \
+          or (snips.intent.forecast_geographical_poi[0] if snips.intent.forecast_geographical_poi else None)
       except Exception:
         pass
 
