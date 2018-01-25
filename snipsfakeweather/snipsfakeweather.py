@@ -26,7 +26,7 @@ ANSWERS = {
     WeatherCondition.wind: {
         True: [
             _("Yes, it is going to be windy"),
-            _("Yes, strong winds are expected"),
+            _("Yes, strong winds are ewxpected"),
             _("Yes, winds and thunderstorms are expected"),
         ],
         False: [
@@ -54,14 +54,14 @@ ANSWERS = {
 class SnipsFakeWeather(object):
     """ Skill for presenting fake weather forecasts. """
 
-    def __init__(self, tts_service=None):
+    def __init__(self, locale=None):
         """
         :param tts_service: A TTS service, i.e. an object which has a
                             `speak(text)` method for speaking the result.
         """
-        self.tts_service = tts_service
+        self.locale = locale
 
-    def speak_forecast(self, locality, date, granularity=0):
+    def speak_forecast(self, snips, locality, date, granularity=0):
         """ Speak a random weather forecast at a specified locality and
             datetime.
 
@@ -76,10 +76,10 @@ class SnipsFakeWeather(object):
         """
         response = SnipsFakeWeather.generate_forecast_sentence(
             locality, date, granularity)
-        if self.tts_service is not None:
-            self.tts_service.speak(response)
 
-    def speak_condition(self, condition, locality, date, granularity=0):
+        snips.dialogue.speak(response, snips.session_id)
+
+    def speak_condition(self, snips, condition, locality, date, granularity=0):
         """ Speak a random response for a given weather condition
             at a specified locality and datetime.
 
@@ -99,10 +99,10 @@ class SnipsFakeWeather(object):
         """
         response = self.generate_condition_sentence(
             condition, locality, date, granularity)
-        if self.tts_service is not None:
-            self.tts_service.speak(response)
 
-    def speak_temperature(self, locality, datetime, granularity=0):
+        snips.dialogue.speak(response, snips.session_id)
+
+    def speak_temperature(self, snips, locality, datetime, granularity=0):
         """ Speak a temperature response for a given weather condition
                     at a specified locality and datetime.
 
@@ -118,8 +118,7 @@ class SnipsFakeWeather(object):
                          at a specified locality and datetime.
                 """
         response = SnipsFakeWeather.generate_temperature(locality, datetime, granularity)
-        if self.tts_service is not None:
-            self.tts_service.speak(response)
+        snips.dialogue.speak(response, snips.session_id)
 
     @staticmethod
     def generate_condition_sentence(condition, locality, date, granularity=0):
