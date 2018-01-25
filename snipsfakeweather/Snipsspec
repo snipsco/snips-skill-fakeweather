@@ -1,78 +1,77 @@
 package_name: snipsfakeweather
 class_name: SnipsFakeWeather
 description: We got fake news. Now it is time for fake weather forecasts.
-requires_tts: True
 intents:
-  - intent: SearchWeatherForecastTemperature
+  - intent: searchWeatherForecastTemperature
     action: |
       {%
       locality = None
       try:
-        locality = intent.weatherForecastLocality \
-          or intent.weatherForecastCountry \
-          or intent.weatherForecastRegion \
-          or intent.weatherForecastGeographicalPOI
+        locality = snips.intent.forecast_locality \
+          or snips.intent.forecast_country \
+          or snips.intent.forecast_region \
+          or snips.intent.forecast_geographical_poi
       except Exception:
         pass
 
       datetime = None
       granularity = None
-      if isinstance(intent.weatherForecastStartDatetime, InstantTime):
-        datetime = intent.weatherForecastStartDatetime.datetime
-        granularity = intent.weatherForecastStartDatetime.granularity
-      elif isinstance(intent.weatherForecastStartDatetime, TimeInterval):
-        datetime = intent.weatherForecastStartDatetime.start
+      if isinstance(snips.intent.forecast_start_datetime, InstantTime):
+        datetime = snips.intent.forecast_start_datetime.datetime
+        granularity = snips.intent.forecast_start_datetime.granularity
+      elif isinstance(snips.intent.forecast_start_datetime, TimeInterval):
+        datetime = snips.intent.forecast_start_datetime.start
 
-      skill.speak_temperature(locality, datetime, granularity)
+      skill.speak_temperature(snips, locality, datetime, granularity)
       %}
-  - intent: SearchWeatherForecast
+  - intent: searchWeatherForecast
     action: |
       {%
       locality = None
       try:
-        locality = intent.weatherForecastLocality \
-          or intent.weatherForecastCountry \
-          or intent.weatherForecastRegion \
-          or intent.weatherForecastGeographicalPOI
+        locality = snips.intent.forecast_locality \
+          or snips.intent.forecast_country \
+          or snips.intent.forecast_region \
+          or snips.intent.forecast_geographical_poi
       except Exception:
         pass
 
       datetime = None
       granularity = None
-      if isinstance(intent.weatherForecastStartDatetime, InstantTime):
-        datetime = intent.weatherForecastStartDatetime.datetime
-        granularity = intent.weatherForecastStartDatetime.granularity
-      elif isinstance(intent.weatherForecastStartDatetime, TimeInterval):
-        datetime = intent.weatherForecastStartDatetime.start
+      if isinstance(snips.intent.forecast_start_datetime, InstantTime):
+        datetime = snips.intent.forecast_start_datetime.datetime
+        granularity = snips.intent.forecast_start_datetime.granularity
+      elif isinstance(snips.intent.forecast_start_datetime, TimeInterval):
+        datetime = snips.intent.forecast_start_datetime.start
 
-      skill.speak_forecast(locality, datetime, granularity)
+      skill.speak_forecast(snips, locality, datetime, granularity)
       %}
-  - intent: SearchWeatherForecastCondition
+  - intent: searchWeatherForecastCondition
     action: |
       {%
       from snipsfakeweather.snipsfakeweather import WeatherCondition
 
       locality = None
       try:
-        locality = intent.weatherForecastLocality \
-          or intent.weatherForecastCountry \
-          or intent.weatherForecastRegion \
-          or intent.weatherForecastGeographicalPOI
+        locality = snips.intent.forecast_locality \
+          or snips.intent.forecast_country \
+          or snips.intent.forecast_region \
+          or snips.intent.forecast_geographical_poi
       except Exception:
         pass
 
       datetime = None
       granularity = None
-      if isinstance(intent.weatherForecastStartDatetime, InstantTime):
-        datetime = intent.weatherForecastStartDatetime.datetime
-        granularity = intent.weatherForecastStartDatetime.granularity
-      elif isinstance(intent.weatherForecastStartDatetime, TimeInterval):
-        datetime = intent.weatherForecastStartDatetime.start
+      if isinstance(snips.intent.forecast_start_datetime, InstantTime):
+        datetime = snips.intent.forecast_start_datetime.datetime
+        granularity = snips.intent.forecast_start_datetime.granularity
+      elif isinstance(snips.intent.forecast_start_datetime, TimeInterval):
+        datetime = snips.intent.forecast_start_datetime.start
 
       name = None
       condition = None
       try:
-        name = intent.weatherForecastConditionName
+        name = snips.intent.forecast_condition_name
       except Exception:
         pass
 
@@ -83,5 +82,5 @@ intents:
       elif "sun" in name:
         condition = WeatherCondition.sun
 
-      skill.speak_condition(condition, locality, datetime, granularity)
+      skill.speak_condition(snips, condition, locality, datetime, granularity)
       %}
