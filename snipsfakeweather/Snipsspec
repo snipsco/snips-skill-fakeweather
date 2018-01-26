@@ -72,7 +72,7 @@ intents:
       name = None
       condition = None
       try:
-        name = snips.intent.forecast_condition_name
+        name = snips.intent.forecast_condition_name[0]
       except Exception:
         pass
 
