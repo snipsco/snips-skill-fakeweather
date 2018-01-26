@@ -16,11 +16,12 @@ intents:
 
       datetime = None
       granularity = None
-      if isinstance(snips.intent.forecast_start_datetime, snips.types.InstantTime):
-        datetime = snips.intent.forecast_start_datetime.datetime
-        granularity = snips.intent.forecast_start_datetime.granularity
-      elif isinstance(snips.intent.forecast_start_datetime, snips.types.TimeInterval):
-        datetime = snips.intent.forecast_start_datetime.start
+
+      if len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime[0], snips.types.InstantTime):
+        datetime = snips.intent.forecast_start_datetime[0].datetime
+        granularity = snips.intent.forecast_start_datetime[0].granularity
+      elif len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime, snips.types.TimeInterval):
+        datetime = snips.intent.forecast_start_datetime[0].start
 
       snips.skill.speak_temperature(snips, locality, datetime, granularity)
       %}
@@ -38,11 +39,11 @@ intents:
 
       datetime = None
       granularity = None
-      if isinstance(snips.intent.forecast_start_datetime, snips.types.InstantTime):
-        datetime = snips.intent.forecast_start_datetime.datetime
-        granularity = snips.intent.forecast_start_datetime.granularity
-      elif isinstance(snips.intent.forecast_start_datetime, snips.types.TimeInterval):
-        datetime = snips.intent.forecast_start_datetime.start
+      if len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime[0], snips.types.InstantTime):
+        datetime = snips.intent.forecast_start_datetime[0].datetime
+        granularity = snips.intent.forecast_start_datetime[0].granularity
+      elif len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime[0], snips.types.TimeInterval):
+        datetime = snips.intent.forecast_start_datetime[0].start
 
       snips.skill.speak_forecast(snips, locality, datetime, granularity)
       %}
@@ -62,11 +63,11 @@ intents:
 
       datetime = None
       granularity = None
-      if isinstance(snips.intent.forecast_start_datetime, snips.types.InstantTime):
-        datetime = snips.intent.forecast_start_datetime.datetime
-        granularity = snips.intent.forecast_start_datetime.granularity
-      elif isinstance(snips.intent.forecast_start_datetime, snips.types.TimeInterval):
-        datetime = snips.intent.forecast_start_datetime.start
+      if len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime[0], snips.types.InstantTime):
+        datetime = snips.intent.forecast_start_datetime[0].datetime
+        granularity = snips.intent.forecast_start_datetime[0].granularity
+      elif len(snips.intent.forecast_start_datetime) and isinstance(snips.intent.forecast_start_datetime[0], snips.types.TimeInterval):
+        datetime = snips.intent.forecast_start_datetime[0].start
 
       name = None
       condition = None
