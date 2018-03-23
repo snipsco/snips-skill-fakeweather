@@ -1,7 +1,7 @@
 # Fake Weather Forecasts skill for Snips
 
 [![Build Status](https://travis-ci.org/snipsco/snips-skill-fakeweather.svg)](https://travis-ci.org/snipsco/snips-skill-fakeweather)
-[![PyPi](https://img.shields.io/pypi/v/fakeweather.svg)](https://pypi.python.org/pypi/fakeweather)
+[![PyPi](https://img.shields.io/pypi/v/snipsfakeweather.svg)](https://pypi.python.org/pypi/snipsfakeweather)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/snipsco/snips-skill-fakeweather/master/LICENSE.txt)
 
 We got fake news. Now let's get fake weather forecasts. This skill generates phrases with random weather forecasts for a given time and location, and is mainly for demo purposes.
